@@ -1,0 +1,4 @@
+passwordsecurity2.GUI_Registration
+passwordsecurity2.GUI_Registration$2
+passwordsecurity2.GUI_Registration$3
+passwordsecurity2.GUI_Registration$1
