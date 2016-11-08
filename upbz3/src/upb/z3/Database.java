@@ -7,13 +7,32 @@ package upb.z3;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 
 public class Database {
+    
+    static Map<String,WaitContants> att;
+
+    public static Map<String, WaitContants> getAtt() {
+        return att;
+    }
+
+    public static void setAtt(Map<String, WaitContants> att) {
+        Database.att = att;
+    }
+    
     
     final static class MyResult {
         private final boolean first;
@@ -38,6 +57,41 @@ public class Database {
         fw.write(text + System.lineSeparator());
         fw.close();    
         return new MyResult(true, "");
+    }
+    protected static void writeMap(String fileName) throws IOException{ 
+        try{
+         FileOutputStream fileOut = new FileOutputStream(fileName);   
+         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+         out.writeObject(att);
+         out.close();
+         fileOut.close();    
+        }
+        catch(IOException i) {
+         i.printStackTrace();
+      }
+    }
+    protected static void readMap(String fileName) throws IOException{ 
+        att = null;
+      try {
+         FileInputStream fileIn = new FileInputStream(fileName);
+         ObjectInputStream in = new ObjectInputStream(fileIn);
+         att = (HashMap<String,WaitContants>) in.readObject();
+         in.close();
+         fileIn.close();
+      }catch(FileNotFoundException e){
+          File file = new File(fileName);
+          file.createNewFile();
+          att= new HashMap<>();
+      }
+      catch(IOException i) {
+         att= new HashMap<>();
+          //i.printStackTrace();
+         //return;
+      }catch(ClassNotFoundException c) {
+         System.out.println("Map class not found");
+         c.printStackTrace();
+         return;
+      }
     }
     
     protected static MyResult find(String fileName, String text) throws IOException{

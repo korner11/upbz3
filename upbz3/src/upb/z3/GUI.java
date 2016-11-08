@@ -2,6 +2,7 @@ package upb.z3;
 
 import java.awt.Dimension;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JEditorPane;
@@ -17,19 +18,26 @@ public class GUI extends javax.swing.JFrame {
      * Creates new form GUI
      */
     public GUI() {
-        initComponents();
-        jEditorPane1.setEditable(false);
-        jEditorPane1.setContentType("text/html;charset=UTF-8");
-        java.net.URL helpURL = PasswordSecurity2.class.getResource("help/uvod.html");
-        if (helpURL != null) {
-            try {
-                jEditorPane1.setPage(helpURL);
-            } catch (IOException e) {
-                System.err.println("Attempted to read a bad URL: " + helpURL);
+        
+            initComponents();
+            jEditorPane1.setEditable(false);
+            jEditorPane1.setContentType("text/html;charset=UTF-8");
+            java.net.URL helpURL = PasswordSecurity2.class.getResource("help/uvod.html");
+            if (helpURL != null) {
+                try {
+                    jEditorPane1.setPage(helpURL);
+                } catch (IOException e) {
+                    System.err.println("Attempted to read a bad URL: " + helpURL);
+                }
+            } else {
+                System.err.println("Couldn't find file: TextSamplerDemoHelp.html");
             }
-        } else {
-            System.err.println("Couldn't find file: TextSamplerDemoHelp.html");
-        }
+           try { 
+            Database.readMap("attends.txt");
+           } catch (IOException ex) {
+                
+               Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
 
     /**
@@ -355,7 +363,7 @@ public class GUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
