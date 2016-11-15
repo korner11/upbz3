@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.StringTokenizer;
 import upb.z3.Database.MyResult;
 
@@ -39,7 +37,7 @@ public class Login {
                 */
                 String password=st.nextToken();
                 String salt=st.nextToken();
-                String hashPassword=getHashPassword(heslo,salt);
+                String hashPassword=Security.getHashPassword(heslo,salt);
 
                 boolean rightPassword = hashPassword.equals(password);
                 //if map contains username then check if its good login if not add wait time, else chceck if its good login if not add to map
@@ -65,38 +63,7 @@ public class Login {
                 
         }
     }
-    public static String sha256(String base) {
-        try{
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(base.getBytes("UTF-8"));
-            StringBuffer hexString = new StringBuffer();
-
-            for (int i = 0; i < hash.length; i++) {
-                String hex = Integer.toHexString(0xff & hash[i]);
-                if(hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
-            }
-
-            return hexString.toString();
-        } catch(Exception ex){
-           throw new RuntimeException(ex);
-        }
-    }
-    
-     public static String getHashPassword(String pass, String salt){
-    
-        String hashPassword=null;
-            for(int i=0;i<3;i++){
-                if(i==0){
-                 hashPassword = sha256(pass + salt);
-                }
-                else{
-                    hashPassword = sha256(hashPassword);
-                }
-            }
-            return hashPassword;
-    }
-     
+   
      public static Date addTimeBySecondsDemo(Date date,int sec){
     
         Calendar calender = Calendar.getInstance();

@@ -2,7 +2,6 @@ package upb.z3;
 
 import java.awt.Dimension;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JEditorPane;

@@ -7,6 +7,7 @@ public class PasswordSecurity2 {
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception {
         GUI okno = new GUI();
